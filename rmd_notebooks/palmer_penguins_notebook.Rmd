@@ -1,0 +1,113 @@
+---
+title: "Palmer Penguins Notebook"
+author: Drew Croteau
+output: html_notebook
+---
+
+<br> 
+
+#### Purpose
+A simple *progression-based* analysis of penguin data.
+
+***
+
+
+## Creating the R environment:
+Here we'll install and load the necessary R packages.
+
+<br>
+
+#### Package installation:
+**Note**: If receiving **error(s)** then the packages are most likely *already* installed.
+```{r install packages as needed}
+install.packages('tidyverse')
+install.packages('palmerpenguins')
+install.packages('ggplot2')
+```
+
+<br>
+
+#### Load packages:
+```{r}
+library('tidyverse')
+library('palmerpenguins')
+library('ggplot2')
+```
+
+<br>
+
+#### Load and preview the dataset:
+**Note**: The 'penguins' dataset is pulled from the 'palmerpenguins' package.
+```{r}
+data(penguins)
+head(penguins)
+```
+
+<br>
+
+***
+
+## Cleaning the data:
+In the preview of the 'penguins' dataset we can see 'NA' values which require cleaning before manipulating the data and creating visuals.
+
+<br>
+
+#### Creating a new table:
+First we'll start by creating a new table and filter the data from 'penguins' to only pull values that are **NOT** 'NA'.
+```{r}
+clean_penguins = filter(penguins, penguins$body_mass_g != 'NA')
+```
+
+<br>
+
+#### View the new table:
+Let's take a peek at the new filtered data.
+```{r}
+head(clean_penguins)
+```
+
+<br>
+
+***
+
+## Data manipulation
+Now that we have a clean dataset, we can manipulate the data to make visualizations easier to create.
+
+<br>
+
+#### Body mass summary
+Here we'll create a subset summary table of our clean dataset with a focus on body mass by species.
+```{r average body mass by species}
+body_mass_summary = clean_penguins %>% 
+  group_by(species) %>%
+  summarize(avg_body_mass = mean(body_mass_g))
+```
+
+<br>
+
+#### View the summary
+Let's view the new summary table and make sure everything is in order.
+```{r}
+print(body_mass_summary)
+```
+
+<br> 
+
+***
+
+## Data visualization
+Even though the summary paints a fairly clear picture already, let's make a visualization to show the differences anyway.
+
+<br>
+
+#### Average body mass by species visualization
+Utilizing the 'ggplot2' package, we can create an easy-to-understand visual representing the body mass by species summary. In this instance, we'll be using a simple bar chart.
+```{r}
+ggplot(data = body_mass_summary) %>% 
+  + geom_col(mapping = aes(x = species, y = avg_body_mass, fill = species)) %>% 
+  ## The rest of this code is for readability and aesthetic purposes.
+  + guides(fill = 'none') %>% 
+  + labs(title = 'Average Body Mass', x = 'Penguin Species', y = 'Mass (Grams)', caption = 
+           'Data by Dr. Kristen Gorman 2007-2009')
+```
+
