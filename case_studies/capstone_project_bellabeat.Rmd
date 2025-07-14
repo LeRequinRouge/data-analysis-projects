@@ -1,9 +1,28 @@
 ---
 title: "Case Study #1: Bellabeat"
+author: Drew Croteau
 output: html_notebook
 ---
 
 ***
 <br>
 
-Testing for GitHub connection.
+### Introduction:
+This case study fulfills the capstone project requirement for the Google Data Analytics Certificate. Although it is optional, this project will bolster my understanding of the topics covered in the course and add to my work portfolio. The project will focus on Track A / Case 2, or more specifically, the ***Bellabeat*** route.
+
+***
+<br>
+
+## Bellabeat:
+A small, but successful, high-tech manufacturer of health-based products for women.
+
+<br>
+
+#### Scenario:
+I am a junior data analyst in the company's marketing department tasked with analyzing existing product data to unlock new growth opportunities.
+
+***
+<br>
+
+### Ask:
+The ultimate goal, or business task, is to promote company growth through analysis of non-Bellabeat smart device data. In other words, what adjustments can the company make to bring in more customers or make more sales based off of the success of a competing company's product. Through this analysis we can recommend adjustments to ***Bellabeat*** products to achieve this goal.
