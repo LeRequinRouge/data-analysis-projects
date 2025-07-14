@@ -1,0 +1,9 @@
+---
+title: "Case Study #1: Bellabeat"
+output: html_notebook
+---
+
+***
+<br>
+
+Testing for GitHub connection.
