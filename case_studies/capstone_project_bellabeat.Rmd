@@ -25,4 +25,26 @@ I am a junior data analyst in the company's marketing department tasked with ana
 <br>
 
 ### Ask:
-The ultimate goal, or business task, is to promote company growth through analysis of non-Bellabeat smart device data. In other words, what adjustments can the company make to bring in more customers or make more sales based off of the success of a competing company's product. Through this analysis we can recommend adjustments to ***Bellabeat*** products to achieve this goal.
+The ultimate goal, or business task, is to promote company growth through analysis of non-Bellabeat smart device data. In other words, what adjustments can the company make to bring in more customers or make more sales based off the data of a competing company's product. Through this analysis we can recommend adjustments to ***Bellabeat*** products to achieve this goal.
+
+***
+<br>
+
+### Prepare:
+The dataset was pulled from **https://www.kaggle.com/datasets/arashnic/fitbit?resource=download-directory&select=mturkfitbit_export_4.12.16-5.12.16** and was obtained from 30 eligible and consenting FitBit users during the timespan of March 12, 2016 - May 12, 2016.
+
+<br>
+
+#### Data Handling:
+The dataset is rather big and spread out across two files, 1 pertaining to each month within the timespan mentioned above. Usuable files, notably the minute, sleep, weight, and daily activity files were all uploaded to ***RStudio***. Some files containing the same amount of rows were combined to consolidate column values using the **inner_join()** function.The separated files (by month) were combined through the **full_join()** function. Everything is stored in the *long* format.
+
+<br>
+
+#### Limitations:
+Variations in specific FitBit product is briefly mentioned in the description on Kaggle but has no obvious indicator within the data itself. Some value(s), like that of the **value** column in the sleep files are non-descriptive. Other names are vague or are missing measurement values such as Calories (is that burned or contained at the time?) or TotalDistance (miles or km?) respectively. Weight logs do not contain all participant IDs.
+
+***
+<br>
+
+### Process:
+
