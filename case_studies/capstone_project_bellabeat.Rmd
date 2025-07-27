@@ -67,4 +67,4 @@ Variations in specific FitBit product is briefly mentioned in the description on
 <br>
 
 ### Process:
-
+Now that we have consolidated tables, we can start making connections with the data and create some visuals.
