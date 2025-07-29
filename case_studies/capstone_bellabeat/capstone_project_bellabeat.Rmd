@@ -40,7 +40,7 @@ The dataset is rather big and spread out across two files, 1 pertaining to each 
 
 <br>
 
-## Necessary Packages:
+### Necessary Packages:
 ```{r}
 library(tidyverse)
 library(tidyr)
@@ -88,3 +88,12 @@ ggplot(data = overall_averages, aes(x = avg_steps, y = avg_calories_burned)) %>%
   + labs(x = 'Average Steps', y = 'Average Calories Burned')
 ```
 ***Analysis***: Fairly obvious results, there's a positive correlation between an increase in calories burned and steps taken. There appears to be more to the story, however, as everyone has different averages indicating more variables at play. Perhaps individuals who are heavier will burn more calories with fewer steps. Unfortunately we cannot dive into this notion because specific characteristics of the subjects are unavailable in this dataset.
+
+<br>
+
+#### Steps by Date:
+```{r}
+ggplot(data = filtered_steps, aes(x = ActivityDate, y = total_steps, fill = total_steps)) %>% 
+  + geom_col()
+```
+
