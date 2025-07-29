@@ -1,0 +1,90 @@
+---
+title: "Case Study #1: Bellabeat"
+author: Drew Croteau
+output: html_notebook
+---
+
+***
+<br>
+
+### Introduction:
+This case study fulfills the capstone project requirement for the Google Data Analytics Certificate. Although it is optional, this project will bolster my understanding of the topics covered in the course and add to my work portfolio. The project will focus on Track A / Case 2, or more specifically, the ***Bellabeat*** route.
+
+***
+<br>
+
+## Bellabeat:
+A small, but successful, high-tech manufacturer of health-based products for women.
+
+<br>
+
+#### Scenario:
+I am a junior data analyst in the company's marketing department tasked with analyzing existing product data to unlock new growth opportunities.
+
+***
+<br>
+
+### Ask:
+The ultimate goal, or business task, is to promote company growth through analysis of non-Bellabeat smart device data. In other words, what adjustments can the company make to bring in more customers or make more sales based off the data of a competing company's product. Through this analysis we can recommend adjustments to ***Bellabeat*** products to achieve this goal.
+
+***
+<br>
+
+### Prepare:
+The dataset was pulled from **https://www.kaggle.com/datasets/arashnic/fitbit?resource=download-directory&select=mturkfitbit_export_4.12.16-5.12.16** and was obtained from 30 eligible and consenting FitBit users during the timespan of March 12, 2016 - May 12, 2016.
+
+<br>
+
+#### Data Handling:
+The dataset is rather big and spread out across two files, 1 pertaining to each month within the timespan mentioned above. Usuable files, notably the minute, sleep, weight, and daily activity files were all uploaded to ***RStudio***. Some files containing the same amount of rows were combined to consolidate column values using the **inner_join()** function.The separated files (by month) were combined through the **full_join()** function. Everything is stored in the *long* format.
+
+<br>
+
+## Necessary Packages:
+```{r}
+library(tidyverse)
+library(tidyr)
+library(ggplot2)
+```
+
+<br>
+
+### Example:
+Here we'll take the sleepDay_merged table and create a new table with the averages of each column.
+```{r}
+average_sleep_data = sleepDay_merged %>% 
+  group_by(Id) %>% 
+  summarize(times_slept = mean(TotalSleepRecords),
+            minutes_asleep = mean(TotalMinutesAsleep), 
+            minutes_in_bed = mean(TotalTimeInBed))
+```
+
+<br>
+
+Good, now we can combine this new table to an averages table created prior.
+```{r}
+overall_averages = inner_join(overall_averages, average_sleep_data)
+  
+```
+
+<br>
+
+#### Limitations:
+Variations in specific FitBit product is briefly mentioned in the description on Kaggle but has no obvious indicator within the data itself. Some value(s), like that of the **value** column in the sleep files are non-descriptive. Other names are vague or are missing measurement values such as Calories (is that burned or contained at the time?) or TotalDistance (miles or km?) respectively. Weight logs do not contain all participant IDs.
+
+***
+<br>
+
+### Process:
+Now that we have consolidated tables, we can start making connections with the data and create some visuals.
+
+<br>
+
+#### Steps Vs. Calories Burned:
+```{r}
+ggplot(data = overall_averages, aes(x = avg_steps, y = avg_calories_burned)) %>%
+  + geom_point() %>% 
+  + geom_smooth() %>% 
+  + labs(x = 'Average Steps', y = 'Average Calories Burned')
+```
+***Analysis***: Fairly obvious results, there's a positive correlation between an increase in calories burned and steps taken. There appears to be more to the story, however, as everyone has different averages indicating more variables at play. Perhaps individuals who are heavier will burn more calories with fewer steps. Unfortunately we cannot dive into this notion because specific characteristics of the subjects are unavailable in this dataset.
