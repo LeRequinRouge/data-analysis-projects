@@ -1,7 +1,11 @@
 ---
-title: "Case Study #1: Bellabeat"
-author: Drew Croteau
-output: html_notebook
+title: 'Case Study #1: Bellabeat'
+author: "Drew Croteau"
+output:
+  pdf_document: default
+  html_notebook: default
+  html_document:
+    df_print: paged
 ---
 
 ***
@@ -30,7 +34,7 @@ The ultimate goal, or business task, is to promote company growth through analys
 ***
 <br>
 
-### Prepare:
+### Prepare and Process:
 The dataset was pulled from **https://www.kaggle.com/datasets/arashnic/fitbit?resource=download-directory&select=mturkfitbit_export_4.12.16-5.12.16** and was obtained from 30 eligible and consenting FitBit users during the timespan of March 12, 2016 - May 12, 2016.
 
 <br>
@@ -51,7 +55,8 @@ library(ggplot2)
 
 ### Example:
 Here we'll take the sleepDay_merged table and create a new table with the averages of each column.
-```{r}
+
+```{r eval=FALSE}
 average_sleep_data = sleepDay_merged %>% 
   group_by(Id) %>% 
   summarize(times_slept = mean(TotalSleepRecords),
@@ -75,7 +80,7 @@ Variations in specific FitBit product is briefly mentioned in the description on
 ***
 <br>
 
-### Process:
+### Analyze and Share:
 Now that we have consolidated tables, we can start making connections with the data and create some visuals.
 
 <br>
@@ -94,6 +99,36 @@ ggplot(data = overall_averages, aes(x = avg_steps, y = avg_calories_burned)) %>%
 #### Steps by Date:
 ```{r}
 ggplot(data = filtered_steps, aes(x = ActivityDate, y = total_steps, fill = total_steps)) %>% 
-  + geom_col()
+  + geom_col() %>% 
+  + labs(title = 'Steps by Date', subtitle = '04-01-2016 - 05-12-2016', x = 'Mon (1) - Sun (7)', y = 'Steps') %>% 
+  + scale_x_continuous(breaks = filtered_steps$ActivityDate, 
+                       labels =   wday(filtered_steps$ActivityDate)) %>% 
+  + scale_y_continuous(labels = scales::comma) %>% 
+  + theme(legend.position = 'none')
 ```
+***Analysis***: A little more interesting of a visual, we can see activity on certain days. Monday and Tuesday seem to have the least activity from participants. The weekends seem to hold slightly higher activity. To confirm this, we'll need to create another visual.
 
+<br>
+
+#### Steps by Day of the Week
+```{r}
+ggplot(data = steps_by_day, aes(x = day, y = steps, fill = day)) %>% 
+  + geom_col() %>% 
+  + scale_fill_viridis_c() %>%
+  + labs(title = 'Steps by Day', x = NULL, y = NULL) %>% 
+  + scale_x_continuous(breaks = c(1, 2, 3, 4, 5, 6, 7), 
+                       labels = c('Monday', 'Tuesday', 'Wednesday',
+                                           'Thursday', 'Friday', 'Saturday',
+                                           'Sunday')) %>% 
+  + scale_y_continuous(labels = scales::comma) %>% 
+  + theme(legend.position = 'none')
+  
+```
+***Analysis***: Beautiful! Simple but informative. Our observation(s) from the previous visual was correct. Monday and Tuesday are the least active days whereas the weekends hold higher step counts. Interestingly enough, Wednesday appears to be the **MOST** active day of the week.
+
+<br>
+
+***
+
+### Act:
+**Suggestion**: Pertaining to the business task of growth, It might be advantageous to focus marketing strategies and advertisements on days where people are more motivated to be active. Namely, Wednesdays and the weekends according to this dataset. No other substantial observations can be expressed using this dataset at this time.

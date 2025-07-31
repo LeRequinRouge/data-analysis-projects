@@ -1,7 +1,9 @@
 ---
 title: "Palmer Penguins Notebook"
-author: Drew Croteau
-output: html_notebook
+author: "Drew Croteau"
+output:
+  pdf_document: default
+  html_notebook: default
 ---
 
 <br> 
