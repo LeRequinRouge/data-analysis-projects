@@ -53,6 +53,15 @@ library(ggplot2)
 
 <br>
 
+```{r}
+overall_averages = read.csv("~/data-analysis-projects-capstone/case_studies/capstone_bellabeat/data_tables/overall_averages.csv")
+filtered_steps = read.csv('~/data-analysis-projects-capstone/case_studies/capstone_bellabeat/data_tables/filtered_steps.csv')
+steps_by_date = read.csv("~/data-analysis-projects-capstone/case_studies/capstone_bellabeat/data_tables/steps_by_date.csv")
+steps_by_day = read.csv("~/data-analysis-projects-capstone/case_studies/capstone_bellabeat/data_tables/steps_by_day.csv")
+
+```
+
+
 ### Example:
 Here we'll take the sleepDay_merged table and create a new table with the averages of each column.
 
@@ -67,7 +76,7 @@ average_sleep_data = sleepDay_merged %>%
 <br>
 
 Good, now we can combine this new table to an averages table created prior.
-```{r}
+```{r eval=FALSE}
 overall_averages = inner_join(overall_averages, average_sleep_data)
   
 ```
@@ -92,38 +101,44 @@ ggplot(data = overall_averages, aes(x = avg_steps, y = avg_calories_burned)) %>%
   + geom_smooth() %>% 
   + labs(x = 'Average Steps', y = 'Average Calories Burned')
 ```
+
+<br>
+
 ***Analysis***: Fairly obvious results, there's a positive correlation between an increase in calories burned and steps taken. There appears to be more to the story, however, as everyone has different averages indicating more variables at play. Perhaps individuals who are heavier will burn more calories with fewer steps. Unfortunately we cannot dive into this notion because specific characteristics of the subjects are unavailable in this dataset.
 
 <br>
 
 #### Steps by Date:
-```{r}
-ggplot(data = filtered_steps, aes(x = ActivityDate, y = total_steps, fill = total_steps)) %>% 
+```{r fig.align='left'}
+ggplot(data = filtered_steps, aes(x = ActivityDate, 
+                                  y = total_steps, fill = total_steps)) %>% 
   + geom_col() %>% 
-  + labs(title = 'Steps by Date', subtitle = '04-01-2016 - 05-12-2016', x = 'Mon (1) - Sun (7)', y = 'Steps') %>% 
-  + scale_x_continuous(breaks = filtered_steps$ActivityDate, 
+  + labs(title = 'Steps by Date', subtitle = '04-01-2016 - 05-12-2016', 
+         x = 'Mon (1) - Sun (7)', y = 'Steps') %>% 
+  + scale_x_discrete(breaks = filtered_steps$ActivityDate, 
                        labels =   wday(filtered_steps$ActivityDate)) %>% 
   + scale_y_continuous(labels = scales::comma) %>% 
   + theme(legend.position = 'none')
 ```
+
+<br>
+
 ***Analysis***: A little more interesting of a visual, we can see activity on certain days. Monday and Tuesday seem to have the least activity from participants. The weekends seem to hold slightly higher activity. To confirm this, we'll need to create another visual.
 
 <br>
 
 #### Steps by Day of the Week
-```{r}
+```{r fig.align="left"}
 ggplot(data = steps_by_day, aes(x = day, y = steps, fill = day)) %>% 
   + geom_col() %>% 
   + scale_fill_viridis_c() %>%
   + labs(title = 'Steps by Day', x = NULL, y = NULL) %>% 
-  + scale_x_continuous(breaks = c(1, 2, 3, 4, 5, 6, 7), 
-                       labels = c('Monday', 'Tuesday', 'Wednesday',
-                                           'Thursday', 'Friday', 'Saturday',
-                                           'Sunday')) %>% 
-  + scale_y_continuous(labels = scales::comma) %>% 
   + theme(legend.position = 'none')
   
 ```
+
+<br>
+
 ***Analysis***: Beautiful! Simple but informative. Our observation(s) from the previous visual was correct. Monday and Tuesday are the least active days whereas the weekends hold higher step counts. Interestingly enough, Wednesday appears to be the **MOST** active day of the week.
 
 <br>
