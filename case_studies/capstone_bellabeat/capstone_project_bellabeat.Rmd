@@ -133,6 +133,9 @@ ggplot(data = steps_by_day, aes(x = day, y = steps, fill = day)) %>%
   + geom_col() %>% 
   + scale_fill_viridis_c() %>%
   + labs(title = 'Steps by Day', x = NULL, y = NULL) %>% 
+  + scale_x_continuous(breaks = c(1, 2, 3, 4, 5, 6, 7),
+                       labels = c("Monday", "Tuesday", "Wednesday", "Thursday",
+                                  "Friday", "Saturday", "Sunday")) %>% 
   + theme(legend.position = 'none')
   
 ```
